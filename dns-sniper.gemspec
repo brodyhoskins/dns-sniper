@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files`.split($/)
 
   spec.bindir = "bin"
-  spec.executables = "sniper"
+  spec.executables = "dns-sniper"
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 2.1.2"
