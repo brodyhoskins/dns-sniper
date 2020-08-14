@@ -3,7 +3,7 @@ require "hosts_file"
 require "open-uri"
 require "resolv"
 
-module Sniper
+module DNSSniper
   class Hostnames
     def initialize(options = {})
       @hostnames = [].to_set

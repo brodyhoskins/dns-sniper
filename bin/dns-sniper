@@ -2,7 +2,7 @@
 
 require "optparse"
 require "set"
-require "sniper"
+require "dns-sniper"
 
 VALID_FORMATS = ["text", "unbound"]
 Options = Struct.new(:blacklist_urls_file, :whitelisted_hosts_file, :format)
@@ -48,5 +48,5 @@ if options[:whitelisted_hosts_file] and not File.exist?(options[:whitelisted_hos
   exit(-1)
 end
 
-hostnames = Sniper::Hostnames.new
+hostnames = DNSSniper::Hostnames.new
 puts hostnames.add_from(File.open(options[:blacklist_urls_file]).readlines).remove_from(options[:whitelisted_hosts_file]).to_format(options[:format])

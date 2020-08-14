@@ -1,4 +1,4 @@
-module Sniper
+module DNSSniper
   module Formatters
     extend self
 
@@ -6,7 +6,7 @@ module Sniper
     @registered = []
 
     def register(class_name, autoload_require)
-      Sniper.autoload(class_name, autoload_require)
+      DNSSniper.autoload(class_name, autoload_require)
       self.registered << class_name
     end
 
@@ -20,5 +20,5 @@ module Sniper
   end
 end
 
-Sniper::Formatters.register :Text, "sniper/formatters/text"
-Sniper::Formatters.register :Unbound, "sniper/formatters/unbound"
+DNSSniper::Formatters.register :Text, "dns-sniper/formatters/text"
+DNSSniper::Formatters.register :Unbound, "dns-sniper/formatters/unbound"

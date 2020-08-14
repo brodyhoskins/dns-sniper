@@ -1,4 +1,4 @@
-module Sniper
+module DNSSniper
   class Formatter
     def initialize(hostnames, options = {})
       @hostnames = hostnames
