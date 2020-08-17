@@ -10,6 +10,11 @@ Gem::Specification.new do |spec|
   spec.description = "Command line utility that combines online DNS blacklists and combines them into the desired configuration format"
   spec.homepage = "https://github.com/brodyhoskins/dns-sniper"
 
+  spec.metadata = {
+    "homepage_uri" => "https://github.com/brodyhoskins/dns-sniper",
+    "source_code_uri" => "https://github.com/brodyhoskins/dns-sniper",
+  }
+
   spec.files = `git ls-files`.split($/)
 
   spec.bindir = "bin"
