@@ -113,7 +113,7 @@ module DNSSniper
     def to_format(format)
       format = format.capitalize
       begin
-        klass = Sniper.const_get(format)
+        klass = DNSSniper.const_get(format)
         klass.new(@hostnames.to_a).output
       rescue NameError
         return false
