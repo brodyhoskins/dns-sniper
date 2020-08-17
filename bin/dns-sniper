@@ -4,7 +4,7 @@ require "optparse"
 require "set"
 require "dns-sniper"
 
-VALID_FORMATS = ["text", "unbound"]
+VALID_FORMATS = DNSSniper::Formatters.all.inject([]) { |arr, f| arr << f.name.to_s.sub('DNSSniper::', '').downcase }
 Options = Struct.new(:blacklist_urls_file, :whitelisted_hosts_file, :format)
 
 class Parser
