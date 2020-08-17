@@ -23,5 +23,6 @@ end
 DNSSniper::Formatters.register :Bind8, "dns-sniper/formatters/bind8"
 DNSSniper::Formatters.register :Dnsmasq, "dns-sniper/formatters/dnsmasq"
 DNSSniper::Formatters.register :Hosts, "dns-sniper/formatters/hosts"
+DNSSniper::Formatters.register :Netgear, "dns-sniper/formatters/netgear"
 DNSSniper::Formatters.register :Text, "dns-sniper/formatters/text"
 DNSSniper::Formatters.register :Unbound, "dns-sniper/formatters/unbound"
