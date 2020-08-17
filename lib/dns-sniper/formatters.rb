@@ -20,5 +20,6 @@ module DNSSniper
   end
 end
 
+DNSSniper::Formatters.register :Dnsmasq, "dns-sniper/formatters/dnsmasq"
 DNSSniper::Formatters.register :Text, "dns-sniper/formatters/text"
 DNSSniper::Formatters.register :Unbound, "dns-sniper/formatters/unbound"

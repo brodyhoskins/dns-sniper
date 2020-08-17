@@ -11,6 +11,7 @@ dns-sniper is a command line utility that combines online DNS blacklists and com
 
 ### Output formats
 
+* dnsmasq
 * Plaintext (hostnames as newline-seperated list)
 * Unbound
 
