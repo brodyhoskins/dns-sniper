@@ -110,11 +110,11 @@ module DNSSniper
       self
     end
 
-    def to_format(format)
+    def to_format(format, options = {})
       format = format.capitalize
       begin
         klass = DNSSniper.const_get(format)
-        klass.new(@hostnames.to_a).output
+        klass.new(@hostnames.to_a).output(options)
       rescue NameError
         return false
       end

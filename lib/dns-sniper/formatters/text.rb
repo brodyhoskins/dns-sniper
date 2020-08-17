@@ -5,7 +5,7 @@ module DNSSniper
       @options = options
     end
 
-    def output
+    def output(options = {})
       @hostnames.to_a.join($/)
     end
   end

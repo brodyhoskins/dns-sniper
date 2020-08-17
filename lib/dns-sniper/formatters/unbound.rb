@@ -5,7 +5,7 @@ module DNSSniper
       @options = options
     end
 
-    def output
+    def output(options = {})
       str = "server:#{$/}"
       @hostnames.each do |hostname|
         str << "  local-zone: \"#{hostname}\" static#{$/}"
