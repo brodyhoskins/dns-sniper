@@ -11,7 +11,7 @@ module DNSSniper
     end
 
     def all
-      Sniper::Formatters.registered.map { |name| Sniper.const_get(name) }
+      DNSSniper::Formatters.registered.map { |name| DNSSniper.const_get(name) }
     end
 
     def find(name)
