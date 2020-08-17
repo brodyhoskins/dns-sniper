@@ -7,13 +7,13 @@ dns-sniper is a command line utility that combines online DNS blacklists and com
 ### Input formats
 
 * HOSTS
-* Plaintext (hostnames as newline-seperated list)
+* plaintext (hostnames as newline-seperated list)
 
 ### Output formats
 
 * dnsmasq
-* Plaintext (hostnames as newline-seperated list)
-* Unbound
+* plaintext (hostnames as newline-seperated list)
+* unbound
 
 ## Installation
 
@@ -43,20 +43,28 @@ hostnames.add_from('https://pgl.yoyo.org/as/serverlist.php?hostformat=hosts;show
 hostnames.add_from('https://raw.githubusercontent.com/brodyhoskins/dns-blocklists/master/tracking.list')
 hostnames.add_from('~/.config/dns-sniper/blocklists.list') # From filesystem
 
+# Manually add domain name
+hostnames.add('ads.yahoo.com')
+hostnames.add_many(['ads.doubleclick.net', 'ads.msn.com'])
+
 # Remove whitelisted domain names
 hostnames.remove_from('~/.config/dns-sniper/whitelisted-hostnames.list')
 hostnames.remove_from('https://example.com/whitelisted.hosts')
 
+# Manually remove domain name
+hostnames.remove('favoritewebsite.com')
+hostnames.remove_many(['favoritewebsite.com', 'otherfavoritewebsite.com'])
+
 # Convert to configuration file
-hostnames.to_text
-hostnames.to_unbound
+hostnames.to_format('dnsmasq')
+hostnames.to_format('unbound')
 ```
 
 ### From CLI
 
 See `dns-sniper --help`
 
-Using the CLI version makes it easy to update the automatically. For example:
+Using the CLI version makes it easy to update configuration formats automatically. For example:
 
 ```bash
 #!/usr/bin/env bash
