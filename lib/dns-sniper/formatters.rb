@@ -17,7 +17,7 @@ module DNSSniper
     end
 
     def find(name)
-      all.find { |c| c.name.downcase == name.to_s.downcase } or raise NameError, "unknown carrier #{name}"
+      all.find { |c| c.name.downcase == name.to_s.downcase } or raise NameError, "Unknown formatter \"#{name}\""
     end
   end
 end
