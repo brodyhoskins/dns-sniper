@@ -5,11 +5,16 @@ Gem::Specification.new do |spec|
   spec.license = 'MIT'
   spec.version = '0.0.1pre'
   spec.date = '2020-11-01'
+
   spec.authors = ['Brody Hoskins']
   spec.email = ['brody@brody.digital']
 
-  spec.summary = 'Command line utility that combines online DNS blacklists and combines them into the desired configuration format'
-  spec.description = 'Command line utility that combines online DNS blacklists and combines them into the desired configuration format'
+  spec.summary = 'Combine DNS blacklists into desired configuration format'
+  spec.description = <<~DESC.gsub(/\n/, ' ').strip
+    dns-sniper generates DNS configuration files based on various user-defined
+    blacklists online. Configuration files can be generated for use in Ruby
+    applications or from the command line.
+  DESC
   spec.homepage = 'https://github.com/brodyhoskins/dns-sniper'
 
   spec.metadata = {
@@ -17,14 +22,14 @@ Gem::Specification.new do |spec|
     'source_code_uri' => 'https://github.com/brodyhoskins/dns-sniper'
   }
 
-  spec.files = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
+  spec.files = Dir['lib/**/*']
+  spec.files += Dir['[A-Z]*'] + Dir['test/**/*']
+  spec.files.reject! { |fn| fn.include? 'CVS' }
+  spec.require_paths = ['lib']
 
   spec.bindir = 'bin'
   spec.executables = 'dns-sniper'
-  spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 2.1.2'
-
-  spec.add_development_dependency 'down', '~> 5.1'
-  spec.add_development_dependency 'hosts_file', '~> 1.0'
+  spec.add_dependency 'down', '~> 5.1'
+  spec.add_dependency 'hosts_file', '~> 1.0'
 end
