@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DNSSniper
   class Hosts < Formatter
     def initialize(hostnames, options = {})
@@ -5,10 +7,10 @@ module DNSSniper
       @options = options
     end
 
-    def output(options = {})
-      str = ""
+    def output(_options = {})
+      str = ''.dup
       @hostnames.each do |hostname|
-        str << "127.0.0.1\t#{hostname}#{$/}"
+        str << "127.0.0.1\t#{hostname}#{$INPUT_RECORD_SEPARATOR}"
       end
       str
     end

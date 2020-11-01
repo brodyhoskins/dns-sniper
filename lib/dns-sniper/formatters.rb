@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 module DNSSniper
   module Formatters
-    extend self
+    module_function
 
     attr_reader :registered
     @registered = []
 
     def register(class_name, autoload_require)
       DNSSniper.autoload(class_name, autoload_require)
-      self.registered << class_name
+      registered << class_name
     end
 
     def all
@@ -20,9 +22,9 @@ module DNSSniper
   end
 end
 
-DNSSniper::Formatters.register :Bind8, "dns-sniper/formatters/bind8"
-DNSSniper::Formatters.register :Dnsmasq, "dns-sniper/formatters/dnsmasq"
-DNSSniper::Formatters.register :Hosts, "dns-sniper/formatters/hosts"
-DNSSniper::Formatters.register :Netgear, "dns-sniper/formatters/netgear"
-DNSSniper::Formatters.register :Text, "dns-sniper/formatters/text"
-DNSSniper::Formatters.register :Unbound, "dns-sniper/formatters/unbound"
+DNSSniper::Formatters.register :Bind8, 'dns-sniper/formatters/bind8'
+DNSSniper::Formatters.register :Dnsmasq, 'dns-sniper/formatters/dnsmasq'
+DNSSniper::Formatters.register :Hosts, 'dns-sniper/formatters/hosts'
+DNSSniper::Formatters.register :Netgear, 'dns-sniper/formatters/netgear'
+DNSSniper::Formatters.register :Text, 'dns-sniper/formatters/text'
+DNSSniper::Formatters.register :Unbound, 'dns-sniper/formatters/unbound'

@@ -1,50 +1,51 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-require "optparse"
-require "set"
-require "dns-sniper"
+require 'optparse'
+require 'set'
+require 'dns-sniper'
 
 VALID_FORMATS = DNSSniper::Formatters.all.inject([]) { |arr, f| arr << f.name.to_s.sub('DNSSniper::', '').downcase }
 Options = Struct.new(:blacklist_urls_file, :whitelisted_hosts_file, :format)
 
 class Parser
   def self.parse(options)
-    args = Options.new("world")
+    args = Options.new('world')
     opt_parser = OptionParser.new do |opts|
       opts.banner = "Usage: #{File.basename(__FILE__)} -f PATH -o FORMAT [options]\n#{File.basename(__FILE__)} combines online DNS blacklists and combines them into the desired configuration FORMAT.\n\n"
-      opts.on("-f", "--blacklist=PATH", "PATH to file with line-separated list of URL’s of blacklists") do |path|
+      opts.on('-f', '--blacklist=PATH', 'PATH to file with line-separated list of URL’s of blacklists') do |path|
         args.blacklist_urls_file = path
       end
-      opts.on("-w", "--whitelist=path", "Path to file with line-separated list of whitelisted hostnames") do |path|
+      opts.on('-w', '--whitelist=path', 'Path to file with line-separated list of whitelisted hostnames') do |path|
         args.whitelisted_hosts_file = path
       end
-      opts.on("-o", "--output=FORMAT", "FORMAT to output — one of #{VALID_FORMATS.join(", ")}") do |format|
+      opts.on('-o', '--output=FORMAT', "FORMAT to output — one of #{VALID_FORMATS.join(', ')}") do |format|
         args.format = format
       end
-      opts.on("-h", "--help", "Prints this help") do
+      opts.on('-h', '--help', 'Prints this help') do
         puts opts
         exit
       end
     end
     opt_parser.parse!(options)
-    return args
+    args
   end
 end
 
 options = Parser.parse ARGV
 
 unless VALID_FORMATS.include?(options[:format])
-  STDERR.puts "Error: Format ”#{options[:format]}” unrecognized"
+  warn "Error: Format ”#{options[:format]}” unrecognized"
   exit(-1)
 end
 
 unless File.exist?(options[:blacklist_urls_file])
-  STDERR.puts "Error: Unable to access ”#{options[:blacklist_urls_file]}”"
+  warn "Error: Unable to access ”#{options[:blacklist_urls_file]}”"
   exit(-1)
 end
 
-if options[:whitelisted_hosts_file] and not File.exist?(options[:whitelisted_hosts_file])
-  STDERR.puts "Error: Unable to access ”#{options[:whitelisted_hosts_file]}”"
+if options[:whitelisted_hosts_file] && !File.exist?(options[:whitelisted_hosts_file])
+  warn "Error: Unable to access ”#{options[:whitelisted_hosts_file]}”"
   exit(-1)
 end
 
