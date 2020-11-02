@@ -35,7 +35,7 @@ end
 options = Parser.parse ARGV
 
 unless VALID_FORMATS.include?(options[:format])
-  warn "Error: Format ”#{options[:format]}” unrecognized"
+  warn options[:format].blank? ? 'Error: Format not defined' : "Error: Invalid format \"#{options[:format]}\""
   exit(-1)
 end
 
