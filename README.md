@@ -47,7 +47,7 @@ hostnames.add_from('~/.config/dns-sniper/blocklists.list') # From filesystem
 
 # Manually add domain name
 hostnames.add('ads.yahoo.com')
-hostnames.add_many(['ads.doubleclick.net', 'ads.msn.com'])
+hostnames.add(['ads.doubleclick.net', 'ads.msn.com'])
 
 # Remove whitelisted domain names
 hostnames.remove_from('~/.config/dns-sniper/whitelisted-hostnames.list')
@@ -55,7 +55,7 @@ hostnames.remove_from('https://example.com/whitelisted.hosts')
 
 # Manually remove domain name
 hostnames.remove('favoritewebsite.com')
-hostnames.remove_many(['favoritewebsite.com', 'otherfavoritewebsite.com'])
+hostnames.remove(['favoritewebsite.com', 'otherfavoritewebsite.com'])
 
 # Convert to configuration file
 hostnames.to_format('dnsmasq')
