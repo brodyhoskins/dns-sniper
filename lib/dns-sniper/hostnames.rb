@@ -124,10 +124,6 @@ module DNSSniper
       @hostnames.to_a
     end
 
-    def to_text
-      @hostnames.to_a.join("\n")
-    end
-
     private
 
     def clean(hostname)
