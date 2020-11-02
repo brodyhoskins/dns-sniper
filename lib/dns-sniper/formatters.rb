@@ -9,7 +9,7 @@ module DNSSniper
 
     def register(class_name, autoload_require)
       DNSSniper.autoload(class_name, autoload_require)
-      registered << class_name
+      @registered << class_name
     end
 
     def all
