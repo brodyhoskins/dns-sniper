@@ -128,14 +128,6 @@ module DNSSniper
       @hostnames.to_a.join("\n")
     end
 
-    def to_unbound
-      str = "server:\n"
-      @hostnames.each do |hostname|
-        str << "  local-zone: \"#{hostname}\" static\n"
-      end
-      str
-    end
-
     private
 
     def clean(hostname)
