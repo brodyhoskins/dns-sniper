@@ -12,14 +12,9 @@ module DNSSniper
       self
     end
 
-    def add(hostname)
-      hostname = clean(hostname)
-      @hostnames << hostname if hostname
-      self
-    end
-
-    def add_many(hostnames)
-      hostnames.each { |hostname| add(hostname) }
+    def add(hostnames)
+      hostnames = clean(hostnames.class == String ? [hostnames] : hostnames)
+      @hostnames += hostnames unless hostnames.empty?
       self
     end
 
@@ -52,23 +47,18 @@ module DNSSniper
           warn "Error: Syntax: Syntax of \"#{path_or_url}\" not recognized, ignored"
           return self
         when 'hosts'
-          add_many from_hosts_file(path_or_url)
+          add from_hosts_file(path_or_url)
         when 'hostnames'
-          add_many from_hostnames_file(contents)
+          add from_hostnames_file(contents)
         end
       end
 
       self
     end
 
-    def remove(hostname)
-      hostname = clean(hostname)
-      @hostnames -= [hostname] if hostname
-      self
-    end
-
-    def remove_many(hostnames)
-      hostnames.each { |hostname| remove(hostname) }
+    def remove(hostnames)
+      hostnames = clean(hostnames.class == String ? [hostnames] : hostnames)
+      @hostnames -= hostnames unless hostnames.empty?
       self
     end
 
@@ -101,9 +91,9 @@ module DNSSniper
           warn "Error: Syntax: Syntax of \"#{path_or_url}\" not recognized, ignored"
           return self
         when 'hosts'
-          remove_many from_hosts_file(path_or_url)
+          remove from_hosts_file(path_or_url)
         when 'hostnames'
-          remove_many from_hostnames_file(contents)
+          remove from_hostnames_file(contents)
         end
       end
 
@@ -126,14 +116,18 @@ module DNSSniper
 
     private
 
-    def clean(hostname)
-      hostname = hostname.downcase.strip
-      hostname = hostname.sub('www.', '')
-      hostname_top_domain = "#{hostname.split('.')[-2]}.#{hostname.split('.')[-1]}"
+    def clean(hostnames)
+      cleaned_hostnames = []
+      hostnames.each do |hostname|
+        hostname = hostname.downcase.strip
+        hostname = hostname.sub('www.', '')
+        hostname_top_domain = "#{hostname.split('.')[-2]}.#{hostname.split('.')[-1]}"
 
-      if !hostname.include?('#') && !['broadcasthost', 'localhost', ''].include?(hostname) && !@hostnames.include?(hostname_top_domain)
-        hostname
+        if !hostname.include?('#') && !['broadcasthost', 'localhost', ''].include?(hostname) && !@hostnames.include?(hostname_top_domain)
+          cleaned_hostnames << hostname
+        end
       end
+      cleaned_hostnames
     end
 
     def syntax(path_or_url, contents)
