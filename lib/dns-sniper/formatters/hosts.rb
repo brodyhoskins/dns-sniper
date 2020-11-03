@@ -10,7 +10,7 @@ module DNSSniper
     def output(_options = {})
       str = ''.dup
       @hostnames.each do |hostname|
-        str << "127.0.0.1\t#{hostname}#{$INPUT_RECORD_SEPARATOR}"
+        str << "127.0.0.1\t#{hostname}#{$/}"
       end
       str
     end

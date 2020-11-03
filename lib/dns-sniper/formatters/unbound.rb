@@ -9,9 +9,9 @@ module DNSSniper
 
     def output(_options = {})
       str = ''.dup
-      str << "server:#{$INPUT_RECORD_SEPARATOR}"
+      str << "server:#{$/}"
       @hostnames.each do |hostname|
-        str << "  local-zone: \"#{hostname}\" static#{$INPUT_RECORD_SEPARATOR}"
+        str << "  local-zone: \"#{hostname}\" static#{$/}"
       end
       str
     end

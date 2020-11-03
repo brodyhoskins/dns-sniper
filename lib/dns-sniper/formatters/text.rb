@@ -8,7 +8,7 @@ module DNSSniper
     end
 
     def output(_options = {})
-      @hostnames.to_a.join($INPUT_RECORD_SEPARATOR)
+      @hostnames.to_a.join($/)
     end
   end
 end

@@ -12,7 +12,7 @@ module DNSSniper
 
       str = ''.dup
       @hostnames.each do |hostname|
-        str << "zone \"#{hostname}\" { type master; notify no; file \"#{options[:zone_file]}\"; };#{$INPUT_RECORD_SEPARATOR}"
+        str << "zone \"#{hostname}\" { type master; notify no; file \"#{options[:zone_file]}\"; };#{$/}"
       end
       str
     end
