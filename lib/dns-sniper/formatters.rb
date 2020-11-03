@@ -2,7 +2,7 @@
 
 module DNSSniper
   module Formatters
-    module_function
+    extend self
 
     attr_reader :registered
     @registered = []
@@ -13,7 +13,7 @@ module DNSSniper
     end
 
     def all
-      DNSSniper::Formatters.registered.map { |name| DNSSniper.const_get(name) }
+      @registered.map { |name| DNSSniper.const_get(name) }
     end
 
     def find(name)
