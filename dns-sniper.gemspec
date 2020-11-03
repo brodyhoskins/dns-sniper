@@ -3,8 +3,8 @@
 Gem::Specification.new do |spec|
   spec.name = 'dns-sniper'
   spec.license = 'MIT'
-  spec.version = '0.0.1.pre4'
-  spec.date = '2020-11-01'
+  spec.version = '0.0.1.pre5'
+  spec.date = '2020-11-03'
 
   spec.authors = ['Brody Hoskins']
   spec.email = ['brody@brody.digital']
