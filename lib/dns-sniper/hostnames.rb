@@ -27,12 +27,12 @@ module DNSSniper
         path_or_url = path_or_url.strip
 
         if File.exist?(path_or_url)
-          contents = File.open(path_or_url).readlines
+          contents = File.open(path_or_url).readlines(chomp: true)
         else
           begin
             down = Down.download(path_or_url)
             path_or_url = down.path
-            contents = down.readlines
+            contents = down.readlines(chomp: true)
           rescue Down::NotFound
             warn "\"#{path_or_url}\" does not exist"
             return self
