@@ -24,7 +24,7 @@ module DNSSniper
       paths_or_urls = [paths_or_urls] if paths_or_urls.class == String
 
       paths_or_urls.each do |path_or_url|
-        path_or_url = path_or_url.strip
+        path_or_url.chomp!
 
         if File.exist?(path_or_url)
           contents = File.open(path_or_url).readlines(chomp: true)
