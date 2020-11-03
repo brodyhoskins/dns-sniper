@@ -135,10 +135,9 @@ module DNSSniper
         next if line.include?('#')
 
         line = line.downcase
-
         if line.strip.split(/\s/).first =~ Regexp.union([Resolv::IPv4::Regex, Resolv::IPv6::Regex])
           return 'hosts'
-        elsif line.include?('.') && (!line.include? 'http') && path_or_url.end_with?('.list')
+        elsif line.include?('.') && !URI.parse(line).is_a?(URI::HTTP)
           return 'hostnames'
         end
       end
