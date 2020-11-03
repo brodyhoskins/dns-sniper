@@ -33,6 +33,8 @@ module DNSSniper
             down = Down.download(path_or_url)
             path_or_url = down.path
             contents = down.readlines(chomp: true)
+          rescue Down::InvalidUrl
+            warn "\"#{path_or_url}\" does not exist, nor is it a valid URL"
           rescue Down::NotFound
             warn "\"#{path_or_url}\" does not exist"
             return self
