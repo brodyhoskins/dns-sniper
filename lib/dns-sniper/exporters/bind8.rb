@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DNSSniper
-  class Bind8 < Formatter
+  class Bind8 < Exporter
     def initialize(hostnames, options = {})
       @hostnames = hostnames
       @options = options

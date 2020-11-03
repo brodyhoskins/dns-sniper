@@ -1,19 +1,14 @@
 # frozen_string_literal: true
 
 module DNSSniper
-  class Unbound < Formatter
+  class Text < Exporter
     def initialize(hostnames, options = {})
       @hostnames = hostnames
       @options = options
     end
 
     def output(_options = {})
-      str = ''.dup
-      str << "server:#{$/}"
-      @hostnames.each do |hostname|
-        str << "  local-zone: \"#{hostname}\" static#{$/}"
-      end
-      str
+      @hostnames.to_a.join($/)
     end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DNSSniper
-  class Netgear < Formatter
+  class Dnsmasq < Exporter
     def initialize(hostnames, options = {})
       @hostnames = hostnames
       @options = options
@@ -9,8 +9,8 @@ module DNSSniper
 
     def output(_options = {})
       str = ''.dup
-      @hostnames.each_with_index do |hostname, i|
-        str << "[517003_e]: #{i + 1}) #{hostname}\n"
+      @hostnames.each do |hostname|
+        str << "server=/#{hostname}/#{$/}"
       end
       str
     end

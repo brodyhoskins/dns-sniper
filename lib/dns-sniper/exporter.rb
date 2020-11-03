@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 module DNSSniper
-  class Formatter
-    def initialize(hostnames, options = {})
+  class Exporter
+    def initialize(hostnames)
       @hostnames = hostnames
-      @options = options
     end
 
     def output
