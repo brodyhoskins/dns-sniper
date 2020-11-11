@@ -5,19 +5,16 @@ require 'optparse'
 require 'set'
 require 'dns-sniper'
 
-VALID_FORMATS = DNSSniper::Formatters.all.inject([]) { |arr, f| arr << f.name.to_s.sub('DNSSniper::', '').downcase }
-Options = Struct.new(:blacklist_urls_file, :whitelisted_hosts_file, :format)
+VALID_FORMATS = DNSSniper::Exporters.all.inject([]) { |arr, f| arr << f.name.to_s.sub('DNSSniper::', '').sub('Exporter', '').downcase }
+Options = Struct.new(:conf_path, :format)
 
 class Parser
   def self.parse(options)
     args = Options.new('world')
     opt_parser = OptionParser.new do |opts|
       opts.banner = "Usage: #{File.basename(__FILE__)} -f PATH -o FORMAT [options]\n#{File.basename(__FILE__)} combines online DNS blacklists and combines them into the desired configuration FORMAT.\n\n"
-      opts.on('-f', '--blacklist=PATH', 'PATH to file with line-separated list of URL’s of blacklists') do |path|
-        args.blacklist_urls_file = path
-      end
-      opts.on('-w', '--whitelist=path', 'Path to file with line-separated list of whitelisted hostnames') do |path|
-        args.whitelisted_hosts_file = path
+      opts.on('-c', '--conf=PATH', 'PATH to YAML configuration file') do |path|
+        args.conf_path = path
       end
       opts.on('-o', '--output=FORMAT', "FORMAT to output — one of #{VALID_FORMATS.join(', ')}") do |format|
         args.format = format
@@ -34,20 +31,20 @@ end
 
 options = Parser.parse ARGV
 
-unless VALID_FORMATS.include?(options[:format])
-  warn options[:format].blank? ? 'Error: Format not defined' : "Error: Invalid format \"#{options[:format]}\""
+unless File.exist?(options[:conf_path])
+  warn "Error: Unable to access ”#{options[:conf_path]}”"
   exit(-1)
 end
 
-unless File.exist?(options[:blacklist_urls_file])
-  warn "Error: Unable to access ”#{options[:blacklist_urls_file]}”"
-  exit(-1)
-end
-
-if options[:whitelisted_hosts_file] && !File.exist?(options[:whitelisted_hosts_file])
-  warn "Error: Unable to access ”#{options[:whitelisted_hosts_file]}”"
+exporter = DNSSniper.const_get("#{options[:format].to_s.split('_').map(&:capitalize).join}Exporter")
+if !exporter
+  warn "Error: Invalid format #{options[:format]}"
   exit(-1)
 end
 
 hostnames = DNSSniper::Hostnames.new
-puts hostnames.add_from(File.open(options[:blacklist_urls_file]).readlines).remove_from(options[:whitelisted_hosts_file]).to_format(options[:format])
+hostnames.blacklist += DNSSniper::ConfigurationImporter.new(options[:conf_path], list: :reject).hostnames
+hostnames.whitelist += DNSSniper::ConfigurationImporter.new(options[:conf_path], list: :allow).hostnames
+
+exporter = exporter.new(hostnames.blocklist)
+puts exporter.data
