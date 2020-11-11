@@ -2,11 +2,14 @@
 
 module DNSSniper
   class Exporter
-    def initialize(hostnames)
+    attr_accessor :data, :hostnames
+
+    def initialize(hostnames, options = {})
       @hostnames = hostnames
+      @data = output(options)
     end
 
-    def output
+    def output(*)
       raise NotImplementedError, "Error: #output isn’t supported by #{self.class.name}"
     end
   end

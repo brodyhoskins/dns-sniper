@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
 module DNSSniper
-  class Unbound < Exporter
-    def initialize(hostnames, options = {})
-      @hostnames = hostnames
-      @options = options
-    end
-
-    def output(_options = {})
+  class UnboundExporter < Exporter
+    def output(*)
       str = ''.dup
       str << "server:#{$/}"
       @hostnames.each do |hostname|

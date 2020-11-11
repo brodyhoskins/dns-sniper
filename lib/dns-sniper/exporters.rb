@@ -2,7 +2,7 @@
 
 module DNSSniper
   module Exporters
-    extend self
+    module_function
 
     attr_reader :registered
     @registered = []
@@ -22,9 +22,9 @@ module DNSSniper
   end
 end
 
-DNSSniper::Exporters.register :Bind8, 'dns-sniper/exporters/bind8'
-DNSSniper::Exporters.register :Dnsmasq, 'dns-sniper/exporters/dnsmasq'
-DNSSniper::Exporters.register :Hosts, 'dns-sniper/exporters/hosts'
-DNSSniper::Exporters.register :Netgear, 'dns-sniper/exporters/netgear'
-DNSSniper::Exporters.register :Text, 'dns-sniper/exporters/text'
-DNSSniper::Exporters.register :Unbound, 'dns-sniper/exporters/unbound'
+DNSSniper::Exporters.register :Bind8Exporter, 'dns-sniper/exporters/bind8_exporter'
+DNSSniper::Exporters.register :DnsmasqExporter, 'dns-sniper/exporters/dnsmasq_exporter'
+DNSSniper::Exporters.register :HostsExporter, 'dns-sniper/exporters/hosts_exporter'
+DNSSniper::Exporters.register :NetgearExporter, 'dns-sniper/exporters/netgear_exporter'
+DNSSniper::Exporters.register :TextExporter, 'dns-sniper/exporters/text_exporter'
+DNSSniper::Exporters.register :UnboundExporter, 'dns-sniper/exporters/unbound_exporter'

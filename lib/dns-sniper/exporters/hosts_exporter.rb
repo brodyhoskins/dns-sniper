@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
 module DNSSniper
-  class Hosts < Exporter
-    def initialize(hostnames, options = {})
-      @hostnames = hostnames
-      @options = options
-    end
-
-    def output(_options = {})
+  class HostsExporter < Exporter
+    def output(*)
       str = ''.dup
       @hostnames.each do |hostname|
         str << "127.0.0.1\t#{hostname}#{$/}"

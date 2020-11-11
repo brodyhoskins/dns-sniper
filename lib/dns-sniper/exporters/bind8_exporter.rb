@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
 module DNSSniper
-  class Bind8 < Exporter
-    def initialize(hostnames, options = {})
-      @hostnames = hostnames
-      @options = options
-    end
-
+  class Bind8Exporter < Exporter
     def output(options = {})
       raise ArgumentError, 'zone_file is required' unless defined?(options[:zone_file])
 
