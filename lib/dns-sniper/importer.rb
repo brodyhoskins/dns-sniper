@@ -35,11 +35,11 @@ module DNSSniper
       return false if domain == ''
       return false if domain.gsub('#', '').gsub(/\s+/, '').empty?
       return false if domain[0] == '#'
-      return false unless domain.include?('.')
       return false if domain.include?(':')
       return false if domain.include?('?')
       return false if ip_addr?(domain)
       return false unless /\b((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}\b/.match?(domain)
+      return false unless /^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}$/.match?(domain)
 
       begin
         return false if URI.parse(domain).is_a?(URI::HTTP)
