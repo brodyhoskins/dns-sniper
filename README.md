@@ -48,10 +48,6 @@ hostnames.whitelist += 'favoritewebsite.com'
 hostnames.blacklist += DNSSniper::DomainsImporter.new('https://raw.githubusercontent.com/brodyhoskins/dns-blocklists/master/tracking.list').hostnames
 hostnames.blacklist += DNSSniper::HostsImporter.new('https://pgl.yoyo.org/as/serverlist.php?hostformat=hosts;showintro=0;mimetype=plaintext').hostnames
 
-# Convert to configuration file
-hostnames.to_format('dnsmasq')
-hostnames.to_format('unbound')
-
 # Blocklist is accessible as a Set (similar to Array)
 hostnames.blocklist
 
