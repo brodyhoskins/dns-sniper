@@ -40,26 +40,23 @@ require 'dns-sniper'
 
 hostnames = DNSSniper::Hostnames.new
 
-# Block domain names
-hostnames.add_from('https://pgl.yoyo.org/as/serverlist.php?hostformat=hosts;showintro=0;mimetype=plaintext') # From the web
-hostnames.add_from('https://raw.githubusercontent.com/brodyhoskins/dns-blocklists/master/tracking.list')
-hostnames.add_from('~/.config/dns-sniper/blocklists.list') # From filesystem
+# Manually add blacklisted or whitelisted domains
+hostnames.blacklist += 'ads.yahoo.com'
+hostnames.whitelist += 'favoritewebsite.com'
 
-# Manually add domain name
-hostnames.add('ads.yahoo.com')
-hostnames.add(['ads.doubleclick.net', 'ads.msn.com'])
-
-# Remove whitelisted domain names
-hostnames.remove_from('~/.config/dns-sniper/whitelisted-hostnames.list')
-hostnames.remove_from('https://example.com/whitelisted.hosts')
-
-# Manually remove domain name
-hostnames.remove('favoritewebsite.com')
-hostnames.remove(['favoritewebsite.com', 'otherfavoritewebsite.com'])
+# Use an Importer to process external lists
+hostnames.blacklist += DNSSniper::DomainsImporter.new('https://raw.githubusercontent.com/brodyhoskins/dns-blocklists/master/tracking.list').hostnames
+hostnames.blacklist += DNSSniper::HostsImporter.new('https://pgl.yoyo.org/as/serverlist.php?hostformat=hosts;showintro=0;mimetype=plaintext').hostnames
 
 # Convert to configuration file
 hostnames.to_format('dnsmasq')
 hostnames.to_format('unbound')
+
+# Blocklist is accessible as a Set (similar to Array)
+hostnames.blocklist
+
+# Use an Exporter to convert to other formats
+UnboundExporter.new(hostnames.blocklist).data
 ```
 
 ### From CLI
@@ -71,7 +68,6 @@ Using the CLI version makes it easy to update configuration formats automaticall
 ```bash
 #!/usr/bin/env bash
 
-/path/to/dns-sniper -f ~/.config/dns-sniper/blacklist.list -w ~/.config/dns-sniper/whitelist.list -o unbound > /etc/unbound/unbound.conf.t/blocklist.conf
-
+/path/to/dns-sniper --conf ~/.config/dns-sniper/dns-sniper.yml --output unbound > /etc/unbound/unbound.conf.d/blocklist.conf
 service unbound reload
 ```
