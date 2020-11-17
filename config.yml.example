@@ -1,0 +1,9 @@
+:sources:
+  :allow:
+    - :importer: :domains
+      :uri: https://example.com/whitelisted.domains.list
+  :reject:
+    - :importer: :domains
+      :uri: https://raw.githubusercontent.com/brodyhoskins/dns-blocklists/master/tracking.list
+    - :importer: :hosts
+      :uri: https://pgl.yoyo.org/as/serverlist.php?hostformat=hosts;showintro=0;mimetype=plaintext
