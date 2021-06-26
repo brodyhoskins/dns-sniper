@@ -11,8 +11,8 @@ module DNSSniper
     attr_accessor :whitelist
 
     def initialize
-      @blacklist = [].to_set
-      @whitelist = [].to_set
+      @blacklist = []
+      @whitelist = []
       self
     end
 
