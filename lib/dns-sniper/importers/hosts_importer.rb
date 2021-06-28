@@ -3,9 +3,9 @@
 module DNSSniper
   class HostsImporter < Importer
     def import_file(path, *)
-      return [].to_set unless File.exist?(path)
+      return [] unless File.exist?(path)
 
-      HostsFile.load(path).map(&:name).map { |hostname| clean(hostname) }.reject { |hostname| rejector(hostname) }.to_set
+      HostsFile.load(path).map(&:name).map { |hostname| clean(hostname) }.reject { |hostname| rejector(hostname) }
     end
 
     def import_uri(uri, *)
@@ -17,10 +17,10 @@ module DNSSniper
       end
 
       if path
-        return HostsFile.load(path).map(&:name).map { |hostname| clean(hostname) }.reject { |hostname| rejector(hostname) }.to_set
+        return HostsFile.load(path).map(&:name).map { |hostname| clean(hostname) }.reject { |hostname| rejector(hostname) }
       end
 
-      [].to_set
+      []
     end
   end
 end

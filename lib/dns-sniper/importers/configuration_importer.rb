@@ -9,15 +9,15 @@ module DNSSniper
 
     def import_file(path, list:)
       raise ArgumentError, "#{self.class.name}: #from_path requies list to be defined" unless list
-      return [].to_set unless File.exist?(path)
+      return [] unless File.exist?(path)
 
       yaml = YAML.safe_load(File.read(path), permitted_classes: [Symbol])
-      return [].to_set unless yaml.dig(:sources)&.dig(list.to_sym)
+      return [] unless yaml.dig(:sources)&.dig(list.to_sym)
 
-      hostnames = [].to_set
+      hostnames = []
       yaml.dig(:sources).dig(list.to_sym).each do |source|
-        return [].to_set unless source.dig(:importer)
-        return [].to_set unless source.dig(:uri)
+        return [] unless source.dig(:importer)
+        return [] unless source.dig(:uri)
 
         importer = DNSSniper.const_get("#{source.dig(:importer).to_s.split('_').map(&:capitalize).join}Importer")
         if !importer
