@@ -1,17 +1,17 @@
 PATH
   remote: .
   specs:
-    dns-sniper (0.0.1.pre6)
+    dns-sniper (0.0.1.pre8)
       down (~> 5.1)
       hosts_file (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.7.0)
+    addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    down (5.2.2)
-      addressable (~> 2.5)
+    down (5.2.3)
+      addressable (~> 2.8)
     hosts_file (1.0.3)
     public_suffix (4.0.6)
 
