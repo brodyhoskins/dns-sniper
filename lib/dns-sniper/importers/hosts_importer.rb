@@ -8,19 +8,14 @@ module DNSSniper
       HostsFile.load(path).map(&:name).map { |hostname| clean(hostname) }.reject { |hostname| rejector(hostname) }
     end
 
-    def import_uri(uri, *)
-      begin
-        down = Down.download(uri)
-        path = down.path
-      rescue Down::InvalidUrl => e
-        warn "#{self.class.name}: #{e}"
-      end
+    def import_uri(uri, options = {})
+      data = ConditionalFetch.new(uri, options).data || ''
 
-      if path
-        return HostsFile.load(path).map(&:name).map { |hostname| clean(hostname) }.reject { |hostname| rejector(hostname) }
-      end
+      arr = []
+      domains = HostsFile::Parser.new(data)
+      domains.each { |domain| arr << domain.name }
 
-      []
+      arr
     end
   end
 end

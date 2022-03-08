@@ -2,21 +2,17 @@
 
 module DNSSniper
   class DomainsImporter < Importer
-    def import_file(path)
+    def import_file(path, *)
       return [] unless File.exist?(path)
 
       File.open(path).readlines(chomp: true).map { |hostname| clean(hostname) }.reject { |hostname| rejector(hostname) }
     end
 
-    def import_uri(uri)
-      begin
-        down = Down.download(uri)
-        return down.readlines(chomp: true).map { |hostname| clean(hostname) }.reject { |hostname| rejector(hostname) }
-      rescue Down::InvalidUrl => e
-        warn "#{self.class.name}: #{e}"
-      end
+    def import_uri(uri, options = {})
+      data = ConditionalFetch.new(uri, options).data
+      return [] unless data
 
-      []
+      data.split(/\n+|\r+/).reject(&:empty?)
     end
   end
 end

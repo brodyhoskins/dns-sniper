@@ -4,16 +4,16 @@ module DNSSniper
   class Importer
     attr_accessor :uri, :hostnames
 
-    def initialize(uri, *)
+    def initialize(uri, options = {})
       @uri = uri
-      @hostnames = File.exist?(uri) ? import_file(uri) : import_uri(uri)
+      @hostnames = File.exist?(uri) ? import_file(uri, options) : import_uri(uri, options)
     end
 
     def import_file(*)
       raise NotImplementedError, "#{self.class.name}: #import_file not supported"
     end
 
-    def import_uri(*)
+    def import_uri(_uri, _options = {})
       raise NotImplementedError, "#{self.class.name}: #import_uri not supported"
     end
 
@@ -39,7 +39,7 @@ module DNSSniper
       return false if domain.include?('?')
       return false if ip_addr?(domain)
       return false unless /\b((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}\b/.match?(domain)
-      return false unless /^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}$/.match?(domain)
+      return false unless /^[a-z0-9]+([\-.]{1}[a-z0-9]+)*\.[a-z]{2,5}$/.match?(domain)
 
       begin
         return false if URI.parse(domain).is_a?(URI::HTTP)
