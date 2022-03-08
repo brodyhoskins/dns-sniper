@@ -51,8 +51,11 @@ hostnames.blacklist += DNSSniper::HostsImporter.new('https://pgl.yoyo.org/as/ser
 # Blocklist is accessible as an Array
 hostnames.blocklist
 
-# Use an Exporter to convert to other formats
-UnboundExporter.new(hostnames.blocklist).data
+# List available formats
+DNSSniper::Exporters.all
+
+# Convert to desired format
+hostnames.to_unbound
 ```
 
 ### From CLI
