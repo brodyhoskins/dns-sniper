@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'down'
-require 'hosts_file'
-require 'open-uri'
-require 'resolv'
-
 module DNSSniper
   class Hostnames
-    attr_accessor :blacklist
-    attr_accessor :whitelist
+    attr_accessor :blacklist, :whitelist
+
+    Exporters.all.each do |exporter|
+      format = exporter.to_s.split('::').last[..-9].tableize.singularize
+
+      define_method(:"to_#{format}") { exporter.new(blocklist).data }
+    end
 
     def initialize
       @blacklist = []
@@ -24,6 +24,7 @@ module DNSSniper
         domain_parts = domain.split('.')
         domain_parts.count.times do |count|
           next if count == 1
+
           whitelist += [domain_parts[count - 1, domain_parts.length].join('.')]
         end
       end

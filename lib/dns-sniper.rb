@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+require 'active_support/all'
 require 'cgi'
+require 'down'
+require 'hosts_file'
 require 'net/http'
 require 'net/https'
+require 'open-uri'
 require 'resolv'
 require 'time'
 require 'yaml'
