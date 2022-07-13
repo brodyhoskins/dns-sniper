@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.bindir = 'bin'
   spec.executables = 'dns-sniper'
 
-  spec.add_dependency 'activesupport', '>= 4.2', '< 7.0.3'
+  spec.add_dependency 'activesupport', '>= 4.2', '< 7.0.4'
   spec.add_dependency 'down', '~> 5.1'
   spec.add_dependency 'hosts_file', '~> 1.0'
 end
